@@ -1,0 +1,115 @@
+public static boolean register(String name, String password) {
+		// TODO Auto-generated method stub
+		boolean flag = false;
+		if ("ramesh".equals(register.getEmail()) && "password".equals(register.getPassword())) {
+			
+			flag = true;
+		} else {
+			
+			flag = false;
+		}
+		return flag;
+	}
+
+create table user(userid int(11) primary key auto_increment, 
+first_name varchar(100) not null, 
+last_name varchar(100) , 
+gender varchar(10) not null, 
+dob varchar(10), 
+email varchar(20) not null, 
+password varchar(20) not null);
+
+
+create table tweet(tweetId int(11) auto_increment not null,
+messages varchar(100),
+userid int(11) not null, 
+primary key(tweetId),
+foreign key(userid) references user(userid)); 
+
+public void displayUsers(String f, String s) {
+    try {
+        String queryString = "SELECT * FROM staff where SName=? and SPwd=?";
+        //set this values using PreparedStatement
+        ResultSet results = ps.executeQuery(queryString); //where ps is Object of PreparedStatement
+
+        if(!results.next()) {
+
+              JOptionPane.showMessageDialog("Wrong Username and Password.");  
+        }
+
+    } catch (SQLException sql) {
+
+        out.println(sql);
+    }finally{
+      //closing ResultSet,PreparedStatement and Connection object
+    }
+
+
+
+// New Code
+
+public void displayUsers(String f, String s) {
+    boolean flag = false;
+    try {
+        String queryString = "SELECT SName, SPwd FROM staff";
+        ResultSet results = Statement.executeQuery(queryString);
+
+        while (results.next()) {
+        String staffname = results.getString("SName");
+        String password =  results.getString("SPwd");
+
+           if ((f.equals(staffname)) && (s.equals(password))) {
+              flag = true;
+              JOptionPane.showMessageDialog(null, "Username and Password exist");  
+        } 
+        results.close();
+        if(!flag){
+               JOptionPane.showMessageDialog(null, "Please Check Username and Password ");
+        }
+    } catch (SQLException sql) {
+
+        out.println(sql);
+    }
+
+
+
+//Updated
+
+       String queryString =" select count(*) as \"exists\" from credit where username=? and password=?";
+        //set this values using PreparedStatement
+        ps = con.prepareStatement(queryString);
+        ps.setString(1,f);
+        ps.setString(2,s);
+        ResultSet results = ps.executeQuery(); 
+
+        if (results.next()) {
+               int i = results.getInt("exists");
+          if(i==1)
+            {
+                JOptionPane.showMessageDialog(null, "Username and Password exist");  
+            }
+            else{
+                 JOptionPane.showMessageDialog(null, "Please Check Username and Password ");
+            }
+
+
+
+
+create table user(userid int(11) primary key auto_increment, 
+first_name varchar(100) not null, 
+last_name varchar(100) , 
+gender varchar(10) not null, 
+dob varchar(10), 
+email varchar(100) not null, 
+password varchar(20) not null);
+
+create table tweet(tweetId int(11) auto_increment not null,
+messages varchar(100),
+email varchar(100) not null,
+createAt varchar(50),
+primary key(tweetId));
+
+
+
+
+
